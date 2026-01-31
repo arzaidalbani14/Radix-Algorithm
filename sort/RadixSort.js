@@ -40,25 +40,26 @@ class Radix_Sort {
             9: []
         }
         let arrSort = []
+        let digPos = 0; // 0=ones, 1=tens, 2=hundreds, so on
         let con = true
         while (con) {
-            for (let e = 0; e < arrSort.length; e++) {
-                if (arrSort[e] > arrSort[e + 1]) {
-                    con = true
-                    continue
-                }
-            }
             for (let s = 0; s < arrayData.length; s++) {
-                let getLastChar = arrayData[s] % 10 // need change: gets the element's last character
+                let getLastChar = arrayData[s] % 10 // need to check
                 // kelompokan digit elemen tersebut ke dalam bucket
                 let getGroup = arrGroup[getLastChar] // checked: gets the obj property of element last character value
                 getGroup.push(arrayData[s]) // checked: inserts/pushes the array[s] element into the obj property
             }
             arrSort = Object.values(arrGroup).flat() // checked
+            digPos++
+            console.log(arrSort)
+            for (let e = 0; e < arrSort.length - 1; e++) {
+                if (arrSort[e] > arrSort[e + 1]) {continue}
+                if (e == arrSort.length - 1) {con = false}
+            }
         }
         const end = performance.now() //ends the benchmark
         const tdms = (end - start).toFixed(4) // get duration between startDate and endDate
-        const result = console.log(`Sorted: ${arrSort} ${typeof(arrSort)} \nDuration: ${tdms} ms`) // >> ${sortB}
+        const result = console.log(`Sorted: ${arrSort} ${digPos} \nDuration: ${tdms} ms`) // >> ${sortB}
         return result
     }
 }
