@@ -1,4 +1,4 @@
-class Quick_Sort {
+class Radix_Sort {
     constructor() {
 
     }
@@ -10,14 +10,14 @@ class Quick_Sort {
         process.stdin.on('data', (data) => {
         const rawData = data.trim()
         console.log(`You typed: ${data} ${typeof(data)}`)
-        const sort = this.sortQ(rawData)
+        const sort = this.sortR(rawData)
         // Exit the process manually if needed
         process.exit();
         return data
         }); 
     }
     //sorting
-    sortQ(data) {
+    sortR(data) {
         // string "2,3,4" to array [2, 3, 4]
         let arrayData = data.split(',').map(Number)
 
@@ -27,7 +27,7 @@ class Quick_Sort {
         // let sortB = arrayData.sort((a, b) => a - b).join(', ')
    
         // Sort algorithm manual radix alg
-        let arrgroup = {
+        const arrGroup = {
             0: [],
             1: [],
             2: [],
@@ -40,16 +40,22 @@ class Quick_Sort {
             9: []
         }
         let arrSort = []
-        // ambil digit terakhir setiap elemen
-        for (let s = 0; s < arrayData.length; s++) {
-            let getLastChar = arrayData[s] % 10 // checked: gets the element's last character
-            // kelompokan digit elemen tersebut ke dalam bucket
-            let getGroup = arrgroup[getLastChar] // checked: gets the obj property of element last character value
-            getGroup.push(arrayData[s]) // checked: inserts/pushes the array[s] element into the obj property
+        let con = true
+        while (con) {
+            for (let e = 0; e < arrSort.length; e++) {
+                if (arrSort[e] > arrSort[e + 1]) {
+                    con = true
+                    continue
+                }
+            }
+            for (let s = 0; s < arrayData.length; s++) {
+                let getLastChar = arrayData[s] % 10 // need change: gets the element's last character
+                // kelompokan digit elemen tersebut ke dalam bucket
+                let getGroup = arrGroup[getLastChar] // checked: gets the obj property of element last character value
+                getGroup.push(arrayData[s]) // checked: inserts/pushes the array[s] element into the obj property
+            }
+            arrSort = Object.values(arrGroup).flat() // checked
         }
-        // masukan hasil itu ke dalam array baru, lakukan proses sama
-        for
-
         const end = performance.now() //ends the benchmark
         const tdms = (end - start).toFixed(4) // get duration between startDate and endDate
         const result = console.log(`Sorted: ${arrSort} ${typeof(arrSort)} \nDuration: ${tdms} ms`) // >> ${sortB}
@@ -57,5 +63,5 @@ class Quick_Sort {
     }
 }
 
-const test1 = new Quick_Sort
+const test1 = new Radix_Sort
 test1.dataIO()
