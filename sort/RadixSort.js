@@ -51,47 +51,30 @@ class Radix_Sort {
                 getGroup.push(arrayData[s]) // checked: inserts/pushes the array[s] element into the obj property
             }
             arrSort = Object.values(arrBucket).flat() // checked
-            console.log(`digPos: ${digPos}`)
-            console.log(`arrSort: ${arrSort}`)
             digPos++
-            if (digPos == 5) {
-                con = false
-            }
-            for (let e = 0; e < arrSort.length - 1; e++) {
-                if (arrSort[e] > arrSort[e + 1]) {
-                    console.log(`${e} > ${e + 1}`)
-                    break
-                } 
-                if (e == arrSort.length - 1) {
-                    con = false
-                }
+            if (arrSort.length > 1) {
+                for (let e = 0; e < arrSort.length - 1; e++) {
+                    if (arrSort[e] > arrSort[e + 1]) {
+                        break
+                    } 
+                    if (e == arrSort.length - 2) {
+                        con = false
+                    }
+                }                
+            } else {
+                break
             }
             //empty arrBucket 
             for (let pro in arrBucket) {
                 arrBucket[pro].length = 0;
             }
         }
-
         const end = performance.now() //ends the benchmark
         const tdms = (end - start).toFixed(4) // get duration between startDate and endDate
-        const result = console.log(`Sorted: ${arrSort} | ${digPos} \nDuration: ${tdms} ms`) // >> ${sortB}
+        const result = console.log(`Sorted: ${arrSort}\nDuration: ${tdms} ms`) // >> ${sortB}
         return result
     }
 }
 
 const test1 = new Radix_Sort
 test1.dataIO()
-
-// outer:
-// while (true) {
-//     let er = 0;
-//     for (let e = 0; e < 5 - 1; e++) {
-//         console.log(e)
-//         if (e == 3) {
-//             er = 1
-//             continue
-//         }
-//     }
-//     console.log(er)
-//     if (er == 1) {break outer}
-// }
