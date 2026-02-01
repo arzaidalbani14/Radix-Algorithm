@@ -9,8 +9,8 @@ class Radix_Sort {
         console.log('Pisahkan dengan koma contoh (2,3,4,5)')
         process.stdin.on('data', (data) => {
         const rawData = data.trim()
-        console.log(`You typed: ${data} ${typeof(data)}`)
-        const sort = this.sortR(rawData)
+        console.log(`You typed: ${data}`)
+        this.sortR(rawData)
         // Exit the process manually if needed
         process.exit();
         return data
@@ -27,7 +27,7 @@ class Radix_Sort {
         // let sortB = arrayData.sort((a, b) => a - b).join(', ')
    
         // Sort algorithm manual radix alg
-        const arrGroup = {
+        const arrBucket = {
             0: [],
             1: [],
             2: [],
@@ -43,26 +43,55 @@ class Radix_Sort {
         let digPos = 0; // 0=ones, 1=tens, 2=hundreds, so on
         let con = true
         while (con) {
+            if (digPos > 0) {arrayData = arrSort}
             for (let s = 0; s < arrayData.length; s++) {
-                let getLastChar = arrayData[s] % 10 // need to check
+                let getLastChar = Math.floor(Math.abs(arrayData[s]) / Math.pow(10, digPos)) % 10 // need to check
                 // kelompokan digit elemen tersebut ke dalam bucket
-                let getGroup = arrGroup[getLastChar] // checked: gets the obj property of element last character value
+                let getGroup = arrBucket[getLastChar] // checked: gets the obj property of element last character value
                 getGroup.push(arrayData[s]) // checked: inserts/pushes the array[s] element into the obj property
             }
-            arrSort = Object.values(arrGroup).flat() // checked
+            arrSort = Object.values(arrBucket).flat() // checked
+            console.log(`digPos: ${digPos}`)
+            console.log(`arrSort: ${arrSort}`)
             digPos++
-            console.log(arrSort)
+            if (digPos == 5) {
+                con = false
+            }
             for (let e = 0; e < arrSort.length - 1; e++) {
-                if (arrSort[e] > arrSort[e + 1]) {continue}
-                if (e == arrSort.length - 1) {con = false}
+                if (arrSort[e] > arrSort[e + 1]) {
+                    console.log(`${e} > ${e + 1}`)
+                    break
+                } 
+                if (e == arrSort.length - 1) {
+                    con = false
+                }
+            }
+            //empty arrBucket 
+            for (let pro in arrBucket) {
+                arrBucket[pro].length = 0;
             }
         }
+
         const end = performance.now() //ends the benchmark
         const tdms = (end - start).toFixed(4) // get duration between startDate and endDate
-        const result = console.log(`Sorted: ${arrSort} ${digPos} \nDuration: ${tdms} ms`) // >> ${sortB}
+        const result = console.log(`Sorted: ${arrSort} | ${digPos} \nDuration: ${tdms} ms`) // >> ${sortB}
         return result
     }
 }
 
 const test1 = new Radix_Sort
 test1.dataIO()
+
+// outer:
+// while (true) {
+//     let er = 0;
+//     for (let e = 0; e < 5 - 1; e++) {
+//         console.log(e)
+//         if (e == 3) {
+//             er = 1
+//             continue
+//         }
+//     }
+//     console.log(er)
+//     if (er == 1) {break outer}
+// }
