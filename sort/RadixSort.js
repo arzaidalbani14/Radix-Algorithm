@@ -24,20 +24,15 @@ class Radix_Sort {
         const start = performance.now() // starts the benchmark duration
 
         // Sort algorithm built in
-        // let sortB = arrayData.sort((a, b) => a - b).join(', ')
-   
-        // Sort algorithm manual radix alg
+        // let arrSort = arrayData.sort((a, b) => a - b).join(', ')
+        
+// manual sort algorithm / for test below:
+
+// above is manual sort algorithm / for test below:
+
+// below is radix sort algorithm
         const arrBucket = {
-            0: [],
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [], 
-            8: [],
-            9: []
+            0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [],  8: [], 9: []
         }
         let arrSort = []
         let digPos = 0; // 0=ones, 1=tens, 2=hundreds, so on
@@ -46,7 +41,7 @@ class Radix_Sort {
             if (digPos > 0) {arrayData = arrSort}
             for (let s = 0; s < arrayData.length; s++) {
                 let getLastChar = Math.floor(Math.abs(arrayData[s]) / Math.pow(10, digPos)) % 10 // need to check
-                // kelompokan digit elemen tersebut ke dalam bucket
+                // group disPos digit into arrGroup
                 let getGroup = arrBucket[getLastChar] // checked: gets the obj property of element last character value
                 getGroup.push(arrayData[s]) // checked: inserts/pushes the array[s] element into the obj property
             }
@@ -69,6 +64,8 @@ class Radix_Sort {
                 arrBucket[pro].length = 0;
             }
         }
+// above is radix sort algoritm
+
         const end = performance.now() //ends the benchmark
         const tdms = (end - start).toFixed(4) // get duration between startDate and endDate
         const result = console.log(`Sorted: ${arrSort}\nDuration: ${tdms} ms`) // >> ${sortB}
